@@ -1,4 +1,6 @@
 #!/bin/sh
+#Brianna Hoelting, Homework2
+
 myvar=/afs/nd.edu/user15/pbui/pub/bin/cowsay
 
 trap cleanup 1 2 15
