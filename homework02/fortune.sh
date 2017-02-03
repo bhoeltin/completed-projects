@@ -5,7 +5,7 @@ trap cleanup 1 2 15
 
 cleanup()
 {
-  echo "Leaving so soon?"
+  echo "Leaving so soon?" | $myvar
   exit 1
 }
 
