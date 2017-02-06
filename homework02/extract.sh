@@ -1,4 +1,5 @@
 #!/bin/sh
+#Brianna Hoelting, Homework 2
 
 if [ "$#" -eq 0 ]; then
  echo "Arguments please"
