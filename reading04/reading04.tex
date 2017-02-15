@@ -1,0 +1,178 @@
+\documentclass[letterpaper]{article}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}  
+\usepackage[margin=1in]{geometry}
+\usepackage{caption}
+\lstset{language=C++} 
+\graphicspath{ {images/} }
+ 
+
+\begin{document}
+% Title ------------------------------------------------------------------
+
+\title{Reading 04: Diversity At Notre Dame}
+\date{February 13, 2017}                                                
+\author{Brianna Hoelting {\textless}bhoeltin@nd.edu{\textgreater}}
+
+\maketitle
+
+% Overview ---------------------------------------------------------------
+
+\section{Overview}
+
+\paragraph{}
+
+This report observes the trends of the diversity within the Computer Science and Engineering department at the University of Notre Dame over the graduating classes of 2013-2019. To accomplish this, data was collected in a csv file and analyzed using gnuplots. To create the plots, the data had to first be extracted and organized in a format conducive to graphing. This was done through two shell scripts, one for the gender statistics and one for the ethnicity statistics. Both scrips would parse the csv and count either the number of each gender or the number of each ethnicity for each year. This was then captured in .dat files to be used to plot gnuplots. Upon doing this, I found that there has been a drastic improvement of the ratio of women to men (ie from 1:3 to 1:2) and an increase in the sheer number of people enrolled in the major. To me, this means there has been a bigger push for todays youth to pursue careers in Computer Science and Engineering.
+
+% Methodology ------------------------------------------------------------
+
+\section{Methodology}
+
+\paragraph{}
+
+In order to extract the data from the {\tt demographics.csv} file, I used the following two codes to create data files. From those data files, GNUplots were created. The first code below shows the script used to parse the {\tt demographics.csv} and find the number of males and females in a given graduating class. The function countgender took in two arguments, the year and the gender. The column variable was assigned for each year using the relationship between the year and the column number. The function set the gender to be counted using the second argument passed to the function. In order to count the specified gender in the specified column, a pipeline consisting of curl, cut, grep, and wc commands was used. This was repeated throughout the years using a for loop that started at 2013 and went to 2019.
+
+\vspace{5mm}
+
+\begin{lstlisting}[frame=single]
+
+#!/bin/sh                                                                       
+# gender.sh                                                                     
+URL=https://www3.nd.edu/~pbui/teaching/cse.20289.sp17/static/csv/
+demographics.csv
+
+count_gender() {
+    column=$(( 2 * $1 % 2013 + 1 ))                                                                  
+    gender=$2                    
+
+    curl -s https://www3.nd.edu/~pbui/teaching/cse.20289.sp17/static/csv
+    /demographics.csv | cut -d ',' -f$column | grep -Eo "$gender" | wc -l
+
+for year in $(seq 2013 2019); do
+    echo $year $(count_gender $year F) $(count_gender $year M)
+done
+
+\end{lstlisting}
+
+
+The next code below shows the script used to parse the {\tt demographics.csv} and find the number of each ethnicity in a given graduating class. The function countethnic took in two arguments, the year and the gender. The column variable was assigned for each year using the relationship between the year and the column number. The second argument passed to the function determine which ethnicity to look for in a column. In order to count the specified ethnicity in the specified column, a pipeline consisting of curl, cut, grep, and wc commands was used. This was repeated throughout the years using a for loop that started at 2013 and went to 2019.
+
+\vspace{5mm}
+
+\begin{lstlisting}[frame=single]
+
+#!/bin/sh                                                           
+
+# ethnic.sh                                                                     
+URL=https://www3.nd.edu/~pbui/teaching/cse.20289.sp17/static/csv/
+demographics.csv
+
+count_ethnic() {
+    column=$(( 2 * $1 % 2013 + 2 ))                                                            
+    ethnic=$2                        
+
+    curl -s https://www3.nd.edu/~pbui/teaching/cse.20289.sp17/static/csv
+    /demographics.csv | cut -d ',' -f$column | grep -Eo "$ethnic" | wc -l
+    
+for year in $(seq 2013 2019); do
+    echo $year $(count_ethnic $year C) \
+               $(count_ethnic $year O) \
+               $(count_ethnic $year S) \
+               $(count_ethnic $year B) \
+               $(count_ethnic $year N) \
+               $(count_ethnic $year T) \
+               $(count_ethnic $year U)
+done
+
+\end{lstlisting}
+
+
+% Analysis ---------------------------------------------------------------
+
+\section*{Analysis}
+
+\paragraph{}
+
+The table, Table 1,  and the graph, Figure 1, is the summary of gender data from {\tt demographics.csv}. It shows the general trend of gender representation over the graduating classes of 2013-2019. Although there is still a majority male representation, the amount of women compared to men has increased, specifically a change from 3:1 to 2:1. If this trend continues, there could be an eventual gender balance in Computer Science and Engineering at Notre Dame.
+
+
+
+\begin{table}[ht]
+
+\centering
+ \begin{tabular}{||c c c||} 
+ \hline
+  Year & F & M \\ [0.5ex] 
+ \hline\hline
+ 2013 & 14 & 49  \\ 
+ \hline
+ 2014 & 12 & 44 \\
+ \hline
+ 2015 & 16 & 58 \\
+ \hline
+ 2016 & 19 & 60 \\
+ \hline
+ 2017 & 26 & 65 \\ 
+ \hline
+ 2018 & 36 & 90 \\ 
+ \hline
+ 2019 & 51 & 97 \\ 
+ \hline
+\end{tabular}
+\caption{The number of males and females in Computer Science and Engineering at the University of Notre Dame from the classes of 2013-2019}
+\label{table:1}
+\end{table}
+
+\begin{figure}[h]
+    \includegraphics[width=10cm, height=10cm]{gender.png}
+    \centering
+    \caption{A graphical representation of the gender data in Table 1}
+\end{figure}        
+
+
+The table \ref{table:2}  and the graph 2 is the summary of ethnic data from {\tt demographics.csv}. It shows the general trend of gender representation over the graduating classes of 2013-2019. There has not been too much growth in ethnic diversity. The majority has been and still remains Caucasian. There has been some growth but no where close to an equal balance among ethnic representation. 
+
+\begin{table}[h!]
+\centering
+ \begin{tabular}{|c c c c c c c c |} 
+ \hline
+  Year & C & O & S & B & N & T & U \\
+ \hline\hline
+ 2013 & 43 & 7 & 7 & 3 & 1 & 2 & 0  \\ 
+ \hline
+ 2014 & 43 & 5 & 4 & 2 & 1 & 1 & 0 \\
+ \hline
+ 2015 & 47 & 9 & 10 & 4 & 1 & 1 & 2\\
+ \hline
+ 2016 & 53 & 9 & 9 & 1 & 7 & 0 & 0 \\
+ \hline
+ 2017 & 60 & 12 & 3 & 5 & 5 & 6 & 0 \\ 
+ \hline
+ 2018 & 91 & 8 & 12 & 3 & 4 & 8 & 0 \\ 
+ \hline
+ 2019 & 92 & 13 & 10 & 3 & 15 & 14 & 0 \\ 
+ \hline
+\end{tabular}
+\caption{The representation of each ethnicity in Computer Science and Engineering at the University of Notre Dame from the classes of 2013-2019}
+\label{table:2}
+\end{table}  
+
+\begin{figure}[h]
+   \includegraphics[width=10cm, height=10cm]{ethnic.png}
+   \centering
+   \caption{A graphical representation of the ethnic data in Table 2}
+\end{figure}
+
+\break
+% Discussion -------------------------------------------------------------
+
+\section*{Discussion}
+
+\paragraph{}
+
+As a woman in a field typically dominated by men, I would say that an increase in diversity is important to me. Without diversity, we are subject to a one-dimensional approach to problems and solutions and we limit the possibility of innovation. That is not to say that a non-diverse person is incapable of innovation, but it would behoove them and society to have input and feedback from many different brains and backgrounds. The more diverse a group coming up with an idea, the more it can be utilized by society. Thus far, I have not experienced any outright discrimination or obstacles in the Computer Science and Engineering department. However, I have noticed the overwhelming amount of guys in some of my classes. Sometimes I do feel like the boys in my classes have not respected my opinions or thought themselves to be of higher intellect than me. But not all guys have shared this attitude. I think that until there is an established gender balance throughout the technology industry, it will be very tough to feel completely free from adversity and discrimination. 
+
+\end{document}
+
