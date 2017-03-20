@@ -37,7 +37,6 @@ void sort_numbers(int numbers[], size_t n) {
 
 int main(int argc, char *argv[]) {
   int numbers[MAX_NUMBERS];
-  int total;
   size_t nsize;
   
   
@@ -45,13 +44,12 @@ int main(int argc, char *argv[]) {
   nsize = read_numbers(stdin, numbers, MAX_NUMBERS);
   if (nsize > 0){
     sort_numbers(numbers, nsize);
-
-    for (size_t i = 0; i < nsize; i++) {
-      printf("%d ", numbers[i]);
+    
+    printf("%d", numbers[0]);
+    for (size_t i = 1; i < nsize; i++) {
+      printf(" %d", numbers[i]);
     }
   }
-  else
-    printf("");
   printf("\n");
   return EXIT_SUCCESS;
 }
