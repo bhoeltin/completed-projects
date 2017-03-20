@@ -27,3 +27,4 @@ grep.exe: grep.c
 
 clean:
 	rm -f $(TARGETS)
+
