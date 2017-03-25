@@ -1,3 +1,20 @@
 Homework 06
 ===========
 
+Activity 1
+==========
+
+1. The string_reverse_words function reverses all the words in a string that is passed into it via the function arguments. It then returns the reversed string. The function accomplishes this by utilizing the string_reverse_range which reverses a string within a range specified by the function arguments. So, the string_reverse_function goes sthrough th given string and reverses each individula word order and then reverses the whole string as a group. This is accomplished by parsing the string until a pace is found (aka the end of a word) then the range of the string to be reversed becomes the beginning pointer, which starts at the beginning of the string, and the end of the range becomes the place before the space. The beginning spot is then incremented and the process continued until the end finds null. Then the whole string is reversed to produce the final result. The time complexity of this function is O(n^2) and a space complexity of O(n). 
+
+2. The string_translate function utilizes a lookuptable to translate a string into the parameters specified byt the arguments passed in. The function uses a while loop to assign the values of the lookup table. The table is initialiaed to hold lib structs that contain the info to translate.While to was not null it would add the *to pointer value to the n value of the struct and the *from value to the o value of the struct. Once the values of the table are set, the program will go through each character of the string and see if any of the characters match the o value in the table and if it does it will change that character to be the n value of the struct. In this way the string is translated. The time complexity of this is O(n^2) and the space complexity is O(n).
+
+3. This function kind of took the same approach as the translate function in that I used a look up table to convert the chars  into ints digit by digit. To convert I also had to get the power to multiply the digit by. I started with the highest possible power to be multiplied by because that is the location that we start with when the string is read in. The power is decremented by dividing by itself as each integer is read. The total is kept by adding the values found by multiplying each digit by its corresponding power. The time complexity is O(n^2) and the space complexity is O(n). 
+
+4. The shared library needs to be loaded at runtime and because of this it has to include extra symbols or bookkeeping that allows it to be loaded or moved around in memory. Static libraries however do not need that bookeeping because it will be embedded in the executable note. Therefore the shared library is bigger.
+
+Activity 2
+==========
+
+1. The translate program parses the command line for flags that give the post-translation actions to be taken. This is done by ensuring that the argument starts with a '-'. When the flags run out, the program will chack for the to and from strings. The translation was implemented using a bitmask to determine the mode. This is all done in the translate_stream function.  The functiont akes in a line as the buffer, chomps it, and translates it using the translate function of the stringultils lib. Then, the function checks to see which modes the function should be in in order to perform the right post-translation operation. This is done with a series of if statements that are only entered if the corresponding flag for a mode is present. Then the stringutils lib functions are used accordingly.
+
+2. With a static executable the library code is stored within the executable and the dynamic executable the libraries are stored in separate files. This makes the static executable larger. The translate static variable worked right off but to get the dynamic one to work I had to set the LD_LIBRARY_PATH variable to the path of the stringutils library. 

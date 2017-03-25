@@ -9,8 +9,8 @@
 
 /* Globals */
 int mode;
-char * SOURCE = NULL;
-char * TARGET = NULL;
+char * SOURCE = "";
+char * TARGET = "";
 char *PROGRAM_NAME = NULL;
 enum {
   STRIP = 1<<1,
