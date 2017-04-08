@@ -19,7 +19,6 @@ Entry *		entry_create(const char *key, const Value value, Entry *next, Type type
     (*p).type = type;
     entry_update(p, value, type);
     (*p).next = next;
-    (*p).type = type;
     return p;
   }
 

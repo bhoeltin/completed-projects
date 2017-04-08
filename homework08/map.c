@@ -142,7 +142,7 @@ void		map_dump(Map *m, FILE *stream, const DumpMode mode) {
       continue;
     }
 
-    while (temp->next){
+    while (temp){
       entry_dump(temp, stream, mode);
       temp = temp->next;
     }

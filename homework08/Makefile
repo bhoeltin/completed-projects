@@ -6,7 +6,7 @@ AR=		ar
 ARFLAGS=	rcs
 TARGETS=	freq \
 		libmap.a \
-		test_map
+		test_map \
 
 all:		$(TARGETS)
 
